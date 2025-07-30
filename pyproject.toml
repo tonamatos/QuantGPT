@@ -1,0 +1,24 @@
+[project]
+name = "quantgpt"
+version = "0.1.0"
+description = "Agentic AI + knowledge-graph + cryptographic quantum vulnerability scanner."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "openai>=1.30.0",
+  "pyyaml>=6.0.1",
+  "python-dotenv>=1.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "ruff",
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

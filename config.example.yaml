@@ -18,36 +18,7 @@ openai:
   base_url: null               # set if you’re proxying the OpenAI API (otherwise leave null)
   json_mode: false             # set true if you always expect JSON responses
 
-scanner:
-  # Domain-specific toggles for your quantum/crypto vulnerability scanner
-  crypto_targets: ["RSA", "ECDSA", "Curve25519"]   # example defaults
-  scan_depth: 2
-  parallelism: 4
-  allow_network_access: false
-
-knowledge_graph:
-  # Example Neo4j defaults; values can be overridden by env vars for secrets
-  backend: neo4j               # neo4j | sqlite | memory (example options)
-  uri: "${NEO4J_URI:-bolt://localhost:7687}"
-  user: "${NEO4J_USER:-neo4j}"
-  # Pull secrets from env so the YAML file itself never contains passwords
-  password_env: "NEO4J_PASSWORD"
-
 logging:
   level: INFO                  # DEBUG | INFO | WARNING | ERROR
   file: logs/quantgpt.log
   json: false
-
-# Advanced: map of named “profiles” you can quickly switch between.
-# In your code you can select a profile and override top-level values at runtime.
-profiles:
-  fast-local:
-    openai:
-      model: "your-fast-model"
-      temperature: 0.3
-      max_output_tokens: 1024
-  high-accuracy:
-    openai:
-      model: "your-strongest-model"
-      temperature: 0.1
-      max_output_tokens: 4096
