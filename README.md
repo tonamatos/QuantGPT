@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.png" alt="QuantGPT Logo" width="200"/>
+</p>
+
 QuantGPT is an advanced agentic AI framework that fuses knowledge-graph reasoning with cryptographic vulnerability scanning to identify potential quantum-era threats.
 
 It leverages cutting-edge large language models, structured data pipelines, and graph analytics to deliver state-of-the-art security insights.
