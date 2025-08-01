@@ -200,3 +200,10 @@ logs/
 Thumbs.db
 .idea/
 .vscode/
+
+# Ignore everything in technical_design_docs
+technical_design_docs/*
+
+# But don't ignore the examples folder and its contents
+!technical_design_docs/examples/
+!technical_design_docs/examples/**
