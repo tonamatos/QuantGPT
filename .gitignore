@@ -207,3 +207,5 @@ technical_design_docs/*
 # But don't ignore the examples folder and its contents
 !technical_design_docs/examples/
 !technical_design_docs/examples/**
+
+images/*
