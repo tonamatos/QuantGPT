@@ -6,9 +6,7 @@ import pathlib
 import typing as t
 import yaml
 
-
 DEFAULT_PROFILE_ENV = "QUANTGPT_PROFILE"
-
 
 def _merge(a: dict, b: dict) -> dict:
     """
@@ -23,13 +21,11 @@ def _merge(a: dict, b: dict) -> dict:
             out[k] = v
     return out
 
-
 def _load_yaml(path: pathlib.Path) -> dict:
     if not path.exists():
         return {}
     with path.open("r", encoding="utf-8") as f:
         return yaml.safe_load(f) or {}
-
 
 def load_config(*, profile: str | None = None, root: str | None = None) -> dict:
     """

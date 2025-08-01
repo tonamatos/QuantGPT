@@ -18,17 +18,20 @@ It leverages cutting-edge large language models, structured data pipelines, and 
 
 ## Setup
 1. Clone the repository
+
 ```bash
 git clone https://github.com/<your-org>/QuantGPT.git
 cd QuantGPT
 ```
 2. Install dependencies
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e .[dev]
 ```
 3. Configure environment variables
+
 Copy the example file and fill in your real secrets:
 ```bash
 cp .env.example .env
@@ -39,6 +42,7 @@ Open `.env` and set at least your OpenAI API key:
 OPENAI_API_KEY=sk-xxxxxx
 ```
 4. Configure runtime settings
+
 Copy the example config file:
 
 ```bash
@@ -51,6 +55,7 @@ Defaults use the profile fast-local.
 You can define your own profiles for high-accuracy or low-latency runs.
 
 5. Run QuantGPT
+
 ```bash
 python -m quantgpt
 ```

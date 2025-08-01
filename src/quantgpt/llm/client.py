@@ -5,11 +5,10 @@ import os
 from typing import Iterable, Optional
 from openai import OpenAI
 
-
 class LLMClient:
     """
     Thin wrapper around OpenAI Chat Completions that:
-      - Reads model & knobs from your loaded config
+      - Reads model & knobs from loaded config
       - Falls back to environment variables where needed
     """
 

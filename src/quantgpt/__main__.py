@@ -6,7 +6,6 @@ from quantgpt.utils.env import load_env
 from quantgpt.config import load_config
 from quantgpt.llm.client import LLMClient
 
-
 def main() -> None:
     print("[DEBUG] Starting QuantGPT main()")
     parser = argparse.ArgumentParser(description="QuantGPT launcher")
@@ -25,7 +24,6 @@ def main() -> None:
     )
     print("\n--- Assistant ---\n")
     print(out)
-
 
 if __name__ == "__main__":
     main()
