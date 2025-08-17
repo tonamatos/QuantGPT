@@ -1,0 +1,4 @@
+cert_id,entity_id,cert_name,recommended_crypto_suite
+1,48,X.509 (v1),"{""PublicKey"": [""RSA"", ""ECDHE"", ""ECDSA""], ""Symmetric"": [""AES"", ""SHA2""]}"
+2,49,X.509 (v2),"{""PublicKey"": [""RSA"", ""ECDHE"", ""ECDSA""], ""Symmetric"": [""AES"", ""SHA2""]}"
+3,50,X.509 (v3),"{""PublicKey"": [""RSA"", ""ECDHE"", ""ECDSA""], ""Symmetric"": [""AES"", ""SHA2""]}"

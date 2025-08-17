@@ -1,0 +1,67 @@
+entity_id,entity_type,entity_name
+1,algorithm,ECC 256 (Signature)
+2,algorithm,ECC 256 (KEM/ENC)
+3,algorithm,ECC 384 (Signature)
+4,algorithm,ECC 384 (KEM/ENC)
+5,algorithm,ECC 521 (Signature)
+6,algorithm,ECC 521 (KEM/ENC)
+7,algorithm,DHE2048 (Signature)
+8,algorithm,DHE2048 (KEM/ENC)
+9,algorithm,DHE3072 (Signature)
+10,algorithm,DHE3072 (KEM/ENC)
+11,algorithm,RSA 1024 (Signature)
+12,algorithm,RSA 1024 (KEM/ENC)
+13,algorithm,RSA 2048 (Signature)
+14,algorithm,RSA 2048 (KEM/ENC)
+15,algorithm,RSA 3072 (Signature)
+16,algorithm,RSA 3072 (KEM/ENC)
+17,algorithm,AES 128
+18,algorithm,AES 192
+19,algorithm,AES 256
+20,algorithm,SHA 256
+21,algorithm,SHA 384
+22,algorithm,SHA 512
+23,algorithm,SHA3 256
+24,algorithm,SHA3 384
+25,algorithm,SHA3 512
+26,algorithm,ML-KEM 512
+27,algorithm,ML-KEM 768
+28,algorithm,ML-KEM 1024
+29,algorithm,ML-DSA 44
+30,algorithm,ML-DSA 65
+31,algorithm,ML-DSA 87
+32,algorithm,Falcon
+33,algorithm,McEliece
+34,algorithm,BIKE
+35,algorithm,HQC
+36,algorithm,SLH-DSA-SHA2-128s
+37,algorithm,SLH-DSA-SHAKE-128s
+38,algorithm,SLH-DSA-SHA2-128f
+39,algorithm,SLH-DSA-SHAKE-128f
+40,algorithm,SLH-DSA-SHA2-192s
+41,algorithm,SLH-DSA-SHAKE-192s
+42,algorithm,SLH-DSA-SHA2-192f
+43,algorithm,SLH-DSA-SHAKE-192f
+44,algorithm,SLH-DSA-SHA2-256s
+45,algorithm,SLH-DSA-SHAKE-256s
+46,algorithm,SLH-DSA-SHA2-256f
+47,algorithm,SLH-DSA-SHAKE-256f
+48,certificate,X.509 (v1)
+49,certificate,X.509 (v2)
+50,certificate,X.509 (v3)
+51,protocol,SSH (v2)
+52,protocol,TLS (v1.3)
+53,protocol,mTLS
+54,protocol,sFTP
+55,protocol,FTPS
+56,protocol,SAML (v2)
+57,protocol,OAuth (v2)
+58,protocol,IKE (v2)
+59,protocol,IPsec
+60,protocol,Kerberos (v5)
+61,protocol,LDAP (v3)
+62,protocol,PGP
+63,protocol,S/MIME (v4)
+64,protocol,WiFi/WPA (v3)
+65,protocol,DECT (v6.0)
+66,protocol,DNSSEC

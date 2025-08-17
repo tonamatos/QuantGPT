@@ -209,3 +209,5 @@ technical_design_docs/*
 !technical_design_docs/examples/**
 
 images/*
+
+risk_report/*

@@ -1,0 +1,16 @@
+vuln_id,vuln_type
+1,Broken by Shor’s Algorithm
+2,Weakened by Grover’s Algorithm
+3,Weakened by Brassard et al.’s Algorithm
+4,Fault Attacks
+5,Simple Power Analysis
+6,Advanced Power Analysis
+7,Electromagnetic Attacks
+8,Template Attacks
+9,Cold-Boot Attacks
+10,Timing Attacks
+11,Cryptanalysis Attacks
+12,"{“Public Key Crypto”:”Broken by Shor’s Algorithm”,”Symmetric Crypto”:”Weakened by Grover’s Algorithm”}"
+13,"{“Optional TLS Public Key Crypto”:”Broken by Shor’s Algorithm”,”Symmetric Crypto”:”Weakened by Grover’s Algorithm”, “Optional TLS Symmetric Crypto”:”Weakened by Grover’s Algorithm”}"
+14,Symmetric Crypto weakened by Grover’s Algorithm
+15,"{“Optional TLS Public Key Crypto”:”Broken by Shor’s Algorithm”,“Optional TLS Symmetric Crypto”:”Weakened by Grover’s Algorithm”,”Optional SASL Symmetric Crypto”:”Weakened by Grover’s Algorithm”, }"

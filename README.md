@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.png" alt="QuantGPT Logo" width="250"/>
+  <img src="images/logo.png" alt="QuantGPT Logo" width="250"/>
 </p>
 
 QuantGPT is an agentic AI framework that incorporates knowledge-graph reasoning with cryptographic vulnerability scanning through large language models (LLMs) to identify potential post-quantum security threats from a system technical design document. Its main use is to help automate risk analysis reports.
@@ -14,6 +14,12 @@ QuantGPT is an agentic AI framework that incorporates knowledge-graph reasoning 
 - Cryptographic quantum vulnerability scanner powered by AI-assisted analysis
 - Configurable OpenAI integration with support for multiple models and tuning profiles
 - Modular, extensible design for research and enterprise deployments
+
+## Knowledge graph
+
+<p align="center">
+  <img src="images/pq_risk.drawio.png" alt="DB diagram" width="500"/>
+</p>
 
 ## Setup
 
