@@ -208,4 +208,4 @@ technical_design_docs/*
 !technical_design_docs/examples/
 !technical_design_docs/examples/**
 
-risk_report/*
+risk_reports/*
