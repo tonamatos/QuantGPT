@@ -70,7 +70,8 @@ def create_risk_report(mapping: dict, G: KnowledgeGraph, output_path: str):
 if __name__ == "__main__":
     base_path = Path(__file__).resolve().parents[3]  # Up from src/quantgpt/llm/
     env_path = base_path / ".env"
-    load_env(dotenv_path=env_path)
+    print(env_path)
+    #load_env(dotenv_path=env_path)
     import os
     pdf_path = base_path / "technical_design_docs" / "examples" / "cisco_convergeone.pdf"
 
