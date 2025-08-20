@@ -1,7 +1,7 @@
 [project]
 name = "quantgpt"
 version = "0.1.0"
-description = "Agentic AI + knowledge-graph + cryptographic quantum vulnerability scanner."
+description = "Agentic AI knowledge-graph cryptographic quantum vulnerability scanner."
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
