@@ -1,7 +1,49 @@
 import pdfplumber
+import fitz
 from pathlib import Path
 
+def extract_text_with_links(pdf_path):
+    """Extracts visible text from a PDF while preserving hyperlinks. Ignores tables.
+    Args:
+        pdf_path (str or Path): Path to the PDF file.
+    Returns:
+        str: Extracted text with hyperlinks in markdown format.
+    """
+    # First pass: extract visible text without tables
+    text_blocks = []
+    with pdfplumber.open(pdf_path) as pdf:
+        for page in pdf.pages:
+            # extract_text() already excludes most tables if layout is correct
+            page_text = page.filter(lambda obj: obj["object_type"] != "char" or obj.get("non_table", True))
+            text_blocks.append(page.extract_text())
+
+    plain_text = "\n\n".join(filter(None, text_blocks))
+
+    # Second pass: overlay links using PyMuPDF
+    doc = fitz.open(pdf_path)
+    for page_num, page in enumerate(doc, start=1):
+        links = page.get_links()
+        for link in links:
+            if "uri" in link:  # it's a URL
+                # Get text near the rectangle (anchor text)
+                rect = fitz.Rect(link["from"])
+                words = page.get_text("words")  # list of (x0, y0, x1, y1, word, block_no, line_no, word_no)
+                anchor_words = [w[4] for w in words if rect.intersects(fitz.Rect(w[:4]))]
+                anchor_text = " ".join(anchor_words) if anchor_words else link["uri"]
+
+                # Replace anchor text in plain_text with markdown-style link
+                plain_text = plain_text.replace(anchor_text, f"[{anchor_text}]({link['uri']})")
+
+    return plain_text
+
 def extract_components_from_pdf(pdf_path, debug=False):
+  """Extracts components and their associated information from tables in a PDF.
+  Args:
+      pdf_path (str or Path): Path to the PDF file.
+      debug (bool): If True, prints debug information.  
+  Returns:
+      dict: A dictionary mapping component names to their associated information.
+  """
   components_data = {}
 
   with pdfplumber.open(pdf_path) as pdf:
@@ -99,3 +141,7 @@ if __name__ == "__main__":
 
   result = extract_components_from_pdf(pdf_path, debug=True)
   pprint(result)
+
+  print("\n\nExtracted Text with Links:\n")
+
+  pprint(extract_text_with_links(pdf_path))
