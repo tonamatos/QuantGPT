@@ -1,6 +1,6 @@
 # src/quantgpt/main.py
 
-from quantgpt.llm.prompt_eng import create_threat_modeling_prompt
+#from quantgpt.llm.prompt_eng import create_threat_modeling_prompt
 from quantgpt.pdf_parser import extract_components_from_pdf, extract_text_with_links
 from quantgpt.llm.client import LLMClient
 from quantgpt.config import load_config
@@ -44,10 +44,10 @@ def run(filename: str, debug: bool = False):
     TODO: Dump the raw_text_with_links into the LLM context for better mapping and accuracy.
     This will help the LLM understand the relationships and context better.
     This should update the components_data with more accurate mappings and include any links found.
-    Then, link_explorer should be called to explore those links for additional context,
-    updating components_data one last time.
     The rest of the program should work as is.
     """
+    
+    link_explorer(components_data) # Updates components_data in place
         
     mapping = map_components_to_entities(components_data, G, llm)
     print("\n--- Component to Entity Mapping ---")
@@ -55,5 +55,11 @@ def run(filename: str, debug: bool = False):
 
     # Create risk report
     report_path = base_path / "risk_reports" / f"risk_report_{filename}.md"
+    
+    """
+    TODO: create_risk_report needs better formatting of the output report, now it makes .md
+    file but it's not well formatted.
+    """
+    
     create_risk_report(mapping, G, str(report_path))
     print(f"Risk report saved to: {report_path}")
