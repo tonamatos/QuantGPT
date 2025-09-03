@@ -127,21 +127,21 @@ def extract_components_from_pdf(pdf_path, debug=False):
 
 # For testing
 if __name__ == "__main__":
-  import sys
-  from pprint import pprint
+    import sys
+    from pprint import pprint
 
-  # This ensures the script works when called from project root
-  base_path = Path(__file__).resolve().parents[2]  # Up from src/quantgpt/
-  pdf_path = base_path / "technical_design_docs" / "examples" / "cisco_convergeone.pdf"
-  #pdf_path = base_path / "technical_design_docs" / "examples" / "nasa_impala.pdf"
+    # This ensures the script works when called from project root
+    base_path = Path(__file__).resolve().parents[2]  # Up from src/quantgpt/
+    pdf_path = base_path / "technical_design_docs" / "examples" / "cisco_convergeone.pdf"
+    #pdf_path = base_path / "technical_design_docs" / "examples" / "nasa_impala.pdf"
 
-  if not pdf_path.exists():
-    print(f"PDF not found at: {pdf_path}")
-    sys.exit(1)
+    if not pdf_path.exists():
+        print(f"PDF not found at: {pdf_path}")
+        sys.exit(1)
 
-  result = extract_components_from_pdf(pdf_path, debug=True)
-  pprint(result)
+    result = extract_components_from_pdf(pdf_path, debug=True)
+    pprint(result)
 
-  print("\n\nExtracted Text with Links:\n")
+    print("\n\nExtracted Text with Links:\n")
 
-  pprint(extract_text_with_links(pdf_path))
+    pprint(extract_text_with_links(pdf_path))
