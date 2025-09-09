@@ -64,7 +64,7 @@ def create_risk_report(mapping: dict, G: KnowledgeGraph, output_path: str):
     # Write file
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     Path(output_path).write_text("\n".join(lines), encoding="utf-8")
-    print(f"✅ Risk report saved to {output_path}")
+    print(f"Risk report saved to {output_path}")
 
 
 if __name__ == "__main__":
