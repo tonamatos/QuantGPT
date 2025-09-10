@@ -8,8 +8,6 @@ from quantgpt.utils.env import load_env
 base_path = Path(__file__).resolve().parents[2]
 load_env(dotenv_path=base_path / ".env")
 
-print("OPENAI_API_KEY:", os.getenv("OPENAI_API_KEY"))  # sanity check
-
 # Now you can safely import modules that use LLMClient
 import gradio as gr
 import asyncio
