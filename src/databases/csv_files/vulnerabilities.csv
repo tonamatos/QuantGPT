@@ -13,4 +13,4 @@ vuln_id,vuln_type
 12,"{“Public Key Crypto”:”Broken by Shor’s Algorithm”,”Symmetric Crypto”:”Weakened by Grover’s Algorithm”}"
 13,"{“Optional TLS Public Key Crypto”:”Broken by Shor’s Algorithm”,”Symmetric Crypto”:”Weakened by Grover’s Algorithm”, “Optional TLS Symmetric Crypto”:”Weakened by Grover’s Algorithm”}"
 14,Symmetric Crypto weakened by Grover’s Algorithm
-15,"{“Optional TLS Public Key Crypto”:”Broken by Shor’s Algorithm”,“Optional TLS Symmetric Crypto”:”Weakened by Grover’s Algorithm”,”Optional SASL Symmetric Crypto”:”Weakened by Grover’s Algorithm”, }"
+15,"{“Optional TLS Public Key Crypto”:”Broken by Shor’s Algorithm”,“Optional TLS Symmetric Crypto”:”Weakened by Grover’s Algorithm”,”Optional SASL Symmetric Crypto”:”Weakened by Grover’s Algorithm” }"

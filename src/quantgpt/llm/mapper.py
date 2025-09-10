@@ -59,6 +59,7 @@ def create_risk_report(mapping: dict, G: KnowledgeGraph, output_path: str):
 
 
 
+
         # Format vulnerabilities
         if vulns:
             vuln_lines = []
@@ -66,25 +67,31 @@ def create_risk_report(mapping: dict, G: KnowledgeGraph, output_path: str):
                 # Sometimes the DB gives the whole thing as a single JSON string
                 raw = v.get("vuln_type") or v.get("description") or str(v)
 
-                # Try to parse JSON-like strings with curly quotes
+                # Only try parsing if it looks like JSON
                 if isinstance(raw, str) and raw.strip().startswith("{"):
                     try:
-                        normalized = raw.replace("“", '"').replace("”", '"')
+                        # Normalize curly quotes to standard quotes
+                        normalized = raw.replace("“", '"').replace("”", '"').replace("‘", "'").replace("’", "'")
                         parsed = json.loads(normalized)
-                        for kind, desc in parsed.items():
-                            vuln_lines.append(f"**{kind}:** {desc}")
+
+                        # Make sure we got a dictionary
+                        if isinstance(parsed, dict):
+                            for kind, desc in parsed.items():
+                                vuln_lines.append(f"**{kind}:** {desc}")
+                        else:
+                            vuln_lines.append(raw)
                     except json.JSONDecodeError:
-                        vuln_lines.append(raw)  # fallback
+                        vuln_lines.append(raw)  # fallback if parsing fails
                 else:
                     vuln_lines.append(str(raw))
 
-            vuln_str = "<br>".join(vuln_lines)
+            vuln_str = "<br><br>".join(vuln_lines)  # single <br> per line is enough
         else:
             vuln_str = "—"
 
 
+
         #Obtaining LIR scores
-        lir_scores_list = []
         risk_lines = []
 
         for r in risks:
@@ -106,7 +113,6 @@ def create_risk_report(mapping: dict, G: KnowledgeGraph, output_path: str):
                 except Exception:
                     risk_lines.append(str(stride_json))
 
-        lir_column = "<br>".join(lir_scores_list) if lir_scores_list else "—"
         risk_column = "<br><br>".join(risk_lines) if risk_lines else "—"
 
         lines.append(f"| {comp} ({entity}) | {vuln_str} | {likelihood} | {impact} | {overall} | {risk_column} |")
