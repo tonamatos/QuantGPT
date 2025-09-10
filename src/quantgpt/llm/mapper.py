@@ -7,7 +7,7 @@ from quantgpt.llm.client import LLMClient
 from quantgpt.knowledge_graph import KnowledgeGraph, build_graph_from_sqlite
 from quantgpt.utils.env import load_env
 
-def map_components_to_entities(components: dict, G: KnowledgeGraph, llm: LLMClient) -> dict:
+def map_components_to_entities(components: dict, additional_context: dict, G: KnowledgeGraph, llm: LLMClient, ) -> dict:
     """
     Use the LLM to map components {name: info} -> {name: entity_name} from knowledge graph.
     """
@@ -16,18 +16,21 @@ def map_components_to_entities(components: dict, G: KnowledgeGraph, llm: LLMClie
 
     # Build prompt
     prompt = f"""
-You are given a set of components (with descriptions) and a list of known entities.
-Map each component to the most likely matching entity name.
+        You are given a set of components (with descriptions) and a list of known entities, and some 
+        optional additional context. Map each component to the most likely matching entity name.
 
-Components:
-{json.dumps(components, indent=2)}
+        Components:
+        {json.dumps(components, indent=2)}
 
-Entities:
-{json.dumps(entity_names, indent=2)}
+        Entities:
+        {json.dumps(entity_names, indent=2)}
 
-Return only JSON of the form:
-{{ "component_name": "entity_name", ... }}
-"""
+        Additional context:
+        {json.dumps(additional_context, indent=2)}
+
+        Return only JSON of the form:
+        {{ "component_name": "entity_name", ... }}
+    """
 
     resp = llm.chat(prompt, system="You are a precise mapping assistant, expert in computer system security.", json_mode=True)
     try:

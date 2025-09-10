@@ -8,9 +8,11 @@ from quantgpt.utils.env import load_env
 from quantgpt.llm.mapper import map_components_to_entities, create_risk_report
 from quantgpt.knowledge_graph import build_graph_from_sqlite
 from quantgpt.doc_crawler import link_explorer
+from quantgpt.llm.unstructured_text_parser import parse_pdf_async
 from pprint import pprint
 from pathlib import Path
 import os
+import asyncio
 
 def run(filename: str, debug: bool = False):
     """Run the QuantGPT pipeline on the given PDF filename (relative to technical_design_docs)."""
@@ -38,6 +40,10 @@ def run(filename: str, debug: bool = False):
     cfg = load_config()
     llm = LLMClient(cfg)
 
+    # Parsing unstructured text
+    pdf_context_model = asyncio.run(parse_pdf_async(pdf_path))
+    additional_context = pdf_context_model.model_dump()
+
     # Map components to entities
 
     """
@@ -49,7 +55,7 @@ def run(filename: str, debug: bool = False):
     
     link_explorer(components_data) # Updates components_data in place
         
-    mapping = map_components_to_entities(components_data, G, llm)
+    mapping = map_components_to_entities(components_data, additional_context, G, llm)
     print("\n--- Component to Entity Mapping ---")
     pprint(mapping)
 

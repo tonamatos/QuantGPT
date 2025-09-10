@@ -2,31 +2,25 @@ from quantgpt.security_properties import SecurityPropertiesModel
 from quantgpt.llm.prompt_eng import create_unstructured_text_prompt
 from quantgpt.unstructured_text_extractor import extract_text_from_pdf, chunk_text
 from quantgpt.chunk_consolidation import combine_outputs_validated
-import openai
-from openai import AsyncOpenAI
+from quantgpt.llm.client import LLMClient  
 import asyncio
 
 
-client = AsyncOpenAI(api_key=openai.api_key)
+llm_client = LLMClient(cfg={})
 
-async def parse_chunk_async(chunk, model_name="gpt-5-mini"):
+
+async def parse_chunk_async(chunk):
     try:
-        response = await client.chat.completions.create(
-            model=model_name,
-            messages=[
-                {"role": "system", "content": create_unstructured_text_prompt(chunk)[0]},
-                {"role": "user", "content": create_unstructured_text_prompt(chunk)[1]}
-            ],
-            response_format={
-                "type": "json_schema",
-                "json_schema": {
-                    "name": "SecurityPropertiesModel",
-                    "schema": SecurityPropertiesModel.model_json_schema()
-                }
-            }
+        system_msg, user_msg = create_unstructured_text_prompt(chunk)
+
+        # Call the async method from your LLMClient
+        raw = await llm_client.achat(
+            prompt=user_msg,
+            system=system_msg,
+            json_mode=True,  # since you want JSON output
+            context_messages=None  # optional, only if you have extra messages
         )
-        
-        raw = response.choices[0].message.content
+
         return SecurityPropertiesModel.model_validate_json(raw)
 
     except Exception as e:

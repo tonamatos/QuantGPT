@@ -1,4 +1,7 @@
 # src/quantgpt/__main__.py
+from quantgpt.utils.env import load_env
+
+load_env()
 
 import argparse
 from . import main

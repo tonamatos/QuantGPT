@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import os
 from typing import Iterable, Optional
-from openai import OpenAI
+from openai import OpenAI, AsyncOpenAI
 
 class LLMClient:
     """
@@ -27,6 +27,9 @@ class LLMClient:
 
         # Create the SDK client. If api_key is set in env, OpenAI() can omit the parameter.
         self.client = OpenAI(api_key=api_key, base_url=base_url)
+
+        # Async client
+        self.async_client = AsyncOpenAI(api_key=api_key, base_url=base_url)
 
         # Core generation settings (with sensible fallbacks)
         self.model = self.section.get("model") or os.getenv("OPENAI_MODEL") or "gpt-4o-mini"
@@ -72,3 +75,35 @@ class LLMClient:
         choice = resp.choices[0]
         content = choice.message.content or ""
         return content
+    
+    async def achat(
+        self,
+        prompt: str,
+        *,
+        system: Optional[str] = None,
+        context_messages: Optional[Iterable[dict]] = None,
+        json_mode: Optional[bool] = None,
+    ) -> str:
+        msgs = []
+        if system:
+            msgs.append({"role": "system", "content": system})
+        if context_messages:
+            msgs.extend(context_messages)
+        msgs.append({"role": "user", "content": prompt})
+
+        force_json = (
+            self.section.get("json_mode", False) if json_mode is None else json_mode
+        )
+
+        resp = await self.async_client.chat.completions.create(
+            model=self.model,
+            messages=msgs,
+            temperature=self.temperature,
+            max_tokens=self.max_tokens,
+            response_format={"type": "json_object"} if force_json else None,
+        )
+
+        choice = resp.choices[0]
+        content = choice.message.content or ""
+        return content
+
