@@ -6,6 +6,7 @@ from pathlib import Path
 from quantgpt.llm.client import LLMClient
 from quantgpt.knowledge_graph import KnowledgeGraph, build_graph_from_sqlite
 from quantgpt.utils.env import load_env
+from quantgpt.lir_helper import get_lir_scores
 
 def map_components_to_entities(components: dict, additional_context: dict, G: KnowledgeGraph, llm: LLMClient, ) -> dict:
     """
@@ -49,20 +50,66 @@ def create_risk_report(mapping: dict, G: KnowledgeGraph, output_path: str):
     lines.append("This report summarizes vulnerabilities and risk assessments for identified components.\n")
 
     # Table header
-    lines.append("| Component (Entity) | Vulnerabilities | Risk Assessments |")
-    lines.append("|-----------|-----------------|------------------|")
+    lines.append("| Component (Entity) | Vulnerabilities | L | I | R | Risk Assessments |")
+    lines.append("|---------------------|-----------------|---|---|---|------------------|")
 
     for comp, entity in mapping.items():
         vulns = G.get_vulnerabilities(entity)
         risks = G.get_risk_assessments(entity)
 
-        vuln_str = ", ".join([v["vuln_type"] for v in vulns]) if vulns else "—"
-        risk_str = "; ".join(
-            [f"Likelihood={r.get('likelihood', '?')}, Impact={r.get('impact', '?')}, Overall={r.get('overall_risk', '?')}"
-             if "likelihood" in r else str(r) for r in risks]
-        ) if risks else "—"
 
-        lines.append(f"| {comp} ({entity}) | {vuln_str} | {risk_str} |")
+
+        # Format vulnerabilities
+        if vulns:
+            vuln_lines = []
+            for v in vulns:
+                # Sometimes the DB gives the whole thing as a single JSON string
+                raw = v.get("vuln_type") or v.get("description") or str(v)
+
+                # Try to parse JSON-like strings with curly quotes
+                if isinstance(raw, str) and raw.strip().startswith("{"):
+                    try:
+                        normalized = raw.replace("“", '"').replace("”", '"')
+                        parsed = json.loads(normalized)
+                        for kind, desc in parsed.items():
+                            vuln_lines.append(f"**{kind}:** {desc}")
+                    except json.JSONDecodeError:
+                        vuln_lines.append(raw)  # fallback
+                else:
+                    vuln_lines.append(str(raw))
+
+            vuln_str = "<br>".join(vuln_lines)
+        else:
+            vuln_str = "—"
+
+
+        #Obtaining LIR scores
+        lir_scores_list = []
+        risk_lines = []
+
+        for r in risks:
+            # --- LIR ---
+            assessment_id = r.get("assessment_id")
+            lir_scores = get_lir_scores(assessment_id, 'src/databases/pq_risk.db')
+            if isinstance(lir_scores, tuple):
+                likelihood, impact, overall = lir_scores
+            else:
+                likelihood = impact = overall = "N/A"
+
+            # --- STRIDE text formatting ---
+            stride_json = r.get("quant_stride")
+            if stride_json:
+                try:
+                    stride_dict = json.loads(stride_json)
+                    for category, text in stride_dict.items():
+                        risk_lines.append(f"**{category}**: {text}")
+                except Exception:
+                    risk_lines.append(str(stride_json))
+
+        lir_column = "<br>".join(lir_scores_list) if lir_scores_list else "—"
+        risk_column = "<br><br>".join(risk_lines) if risk_lines else "—"
+
+        lines.append(f"| {comp} ({entity}) | {vuln_str} | {likelihood} | {impact} | {overall} | {risk_column} |")
 
     # Write file
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
