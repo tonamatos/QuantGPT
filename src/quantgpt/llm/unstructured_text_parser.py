@@ -2,23 +2,36 @@ from quantgpt.security_properties import SecurityPropertiesModel
 from quantgpt.llm.prompt_eng import create_unstructured_text_prompt
 from quantgpt.unstructured_text_extractor import extract_text_from_pdf, chunk_text
 from quantgpt.chunk_consolidation import combine_outputs_validated
-from quantgpt.llm.client import LLMClient  
 import asyncio
+import os
 
 
-llm_client = LLMClient(cfg={})
+# Lazy initialization to avoid import-time API key requirement
+_llm_client = None
+
+def get_llm_client():
+    """Get or create LLM client with lazy initialization."""
+    global _llm_client
+    if _llm_client is None:
+        # Always use the original LLMClient to avoid circular imports
+        from quantgpt.llm.client import LLMClient
+        _llm_client = LLMClient(cfg={})
+    return _llm_client
 
 
 async def parse_chunk_async(chunk):
     try:
         system_msg, user_msg = create_unstructured_text_prompt(chunk)
 
-        # Call the async method from your LLMClient
+        # Get LLM client with lazy initialization
+        llm_client = get_llm_client()
+        
+        # Use the original LLMClient interface
         raw = await llm_client.achat(
             prompt=user_msg,
             system=system_msg,
-            json_mode=True,  # since you want JSON output
-            context_messages=None  # optional, only if you have extra messages
+            json_mode=True,
+            context_messages=None
         )
 
         return SecurityPropertiesModel.model_validate_json(raw)

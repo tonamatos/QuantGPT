@@ -14,25 +14,25 @@ class LLMClient:
 
     def __init__(self, cfg: dict):
         self.cfg = cfg or {}
-        self.section = (self.cfg.get("openai") or {})
-        # Prefer explicit key; otherwise rely on env-only usage
-        api_key = os.getenv("OPENAI_API_KEY")
+        self.section = (self.cfg.get("openrouter") or {})
+        # Use OpenRouter API key instead of OpenAI
+        api_key = os.getenv("OPENROUTER_API_KEY")
         if not api_key:
             raise RuntimeError(
-                "OPENAI_API_KEY is not set. Create a .env from .env.example and fill it in."
+                "OPENROUTER_API_KEY is not set. Set the OpenRouter API key environment variable."
             )
 
-        # Optional base_url for proxy/self-hosted gateways (leave None if not used)
-        base_url = self.section.get("base_url") or None
+        # OpenRouter base URL
+        base_url = "https://openrouter.ai/api/v1"
 
-        # Create the SDK client. If api_key is set in env, OpenAI() can omit the parameter.
+        # Create the SDK client with OpenRouter configuration
         self.client = OpenAI(api_key=api_key, base_url=base_url)
 
         # Async client
         self.async_client = AsyncOpenAI(api_key=api_key, base_url=base_url)
 
-        # Core generation settings (with sensible fallbacks)
-        self.model = self.section.get("model") or os.getenv("OPENAI_MODEL") or "gpt-4o-mini"
+        # Core generation settings (with sensible fallbacks for OpenRouter)
+        self.model = self.section.get("model") or os.getenv("OPENROUTER_MODEL") or "openai/gpt-4o-mini"
         self.temperature = float(self.section.get("temperature", 0.2))
         # Chat Completions uses `max_tokens`; map from config's `max_output_tokens` if provided
         self.max_tokens = int(self.section.get("max_output_tokens", 2048)) or None

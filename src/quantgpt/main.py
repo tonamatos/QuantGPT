@@ -20,7 +20,7 @@ def run(filename: str, debug: bool = False):
     env_path = base_path / ".env"
     if debug: print(f"Loading .env from: {env_path}")
     load_env(dotenv_path=env_path)
-    if debug: print("OPENAI_API_KEY loaded:", os.getenv("OPENAI_API_KEY"))
+    if debug: print("OPENROUTER_API_KEY loaded:", os.getenv("OPENROUTER_API_KEY"))
 
     pdf_path = base_path / "technical_design_docs" / filename
     print(f"Processing PDF: {pdf_path}")

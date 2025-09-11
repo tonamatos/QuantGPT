@@ -3,19 +3,19 @@ app:
   name: QuantGPT
   environment: development  # development | staging | production
 
-openai:
+openrouter:
   # Provider & model settings
-  provider: openai
-  # Use the exact model ID you intend to run (examples: gpt-4o, gpt-4o-mini, o3-mini, etc.)
+  provider: openrouter
+  # Use the exact model ID you intend to run (examples: openai/gpt-4o, openai/gpt-4o-mini, anthropic/claude-3-5-sonnet, etc.)
   # Leave as-is and set the real model in your local config.yaml.
-  model: "your-model-id-here"
+  model: "openai/gpt-4o-mini"
   # Typical generation knobs
   temperature: 0.2
   max_output_tokens: 2048      # use 0 or null to let the server decide, if supported
   seed: null                   # set an int for reproducibility, if supported
   # Networking
   request_timeout_seconds: 30
-  base_url: null               # set if you’re proxying the OpenAI API (otherwise leave null)
+  base_url: "https://openrouter.ai/api/v1"  # OpenRouter API endpoint
   json_mode: false             # set true if you always expect JSON responses
 
 logging:

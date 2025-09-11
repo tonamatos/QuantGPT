@@ -78,6 +78,46 @@ quantgpt -f examples/cisco_convergeone.pdf --debug (optional)
 
 This will process the specified PDF file inside the `technical_design_docs/` folder and produce a risk report inside `risk_reports`.
 
+## Semantic Kernel Orchestrator
+
+QuantGPT includes an advanced orchestrator built with Microsoft's Semantic Kernel framework that provides autonomous task orchestration and function calling capabilities.
+
+### Features
+
+- **Autonomous Orchestration**: Uses Semantic Kernel's function calling to automatically coordinate PDF analysis workflows
+- **Plugin Architecture**: Modular plugins for PDF analysis, risk assessment, and orchestration
+- **Multiple Execution Modes**: Support for planner, agent, and direct execution modes
+- **OpenRouter Integration**: Built-in support for OpenRouter API with fallback to OpenAI
+
+### Usage
+
+The orchestrator can be run directly from the `src/quantgpt/` directory:
+
+```bash
+cd src/quantgpt
+source ../../venv/bin/activate
+export OPENROUTER_API_KEY="your-openrouter-key"
+python3 quantgpt_orchestration.py -f path/to/document.pdf --mode direct
+```
+
+**Note**: The orchestrator requires specific versions of semantic-kernel and pydantic for compatibility. The requirements.txt file includes the tested compatible versions.
+
+### Execution Modes
+
+- **`--mode direct`**: Direct kernel function invocation (recommended)
+- **`--mode agent`**: Uses Semantic Kernel agent with function calling
+- **`--mode planner`**: Autonomous planning (requires newer Semantic Kernel version)
+
+### Output
+
+The orchestrator generates comprehensive risk assessment reports in the `risk_reports/` directory at the project root level, including:
+
+- Component extraction and analysis
+- Knowledge graph mapping
+- Quantum vulnerability assessments
+- STRIDE threat model analysis
+- Detailed risk scoring (LIR - Likelihood, Impact, Risk)
+
 ## Security Best Practices
 
 Never commit your `.env` or `config.yaml` (they are already in `.gitignore`).
