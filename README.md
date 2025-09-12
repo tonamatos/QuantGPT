@@ -4,7 +4,7 @@
 
 QuantGPT is an agentic AI framework that incorporates knowledge-graph reasoning with cryptographic vulnerability scanning through large language models (LLMs) to identify potential post-quantum security threats from a system technical design document. Its main use is to help automate risk analysis reports.
 
->Developed by Dr. Aaron Crighton, Dr. David Jaramillo-Martinez, Tonatiuh Matos-Wiederhold, and Dr. Ethan Ross
+>Developed by David Jaramillo-Martinez, Tonatiuh Matos-Wiederhold and Dr. Ethan Ross
 >as Visiting Scholars at the **Fields Institute for Research in Mathematical Sciences**, in partnership with **Scotiabank**.
 
 ## Features
