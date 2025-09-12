@@ -96,7 +96,7 @@ def extract_components_from_pdf(pdf_path, debug=False):
 
         # Step 3: Iterate over rows and align by position
         for row_idx, raw_row in enumerate(table[1:], start=1):
-          clean_row = [cell.strip() for cell in raw_row if cell and cell.strip()]
+          clean_row = [cell.strip() if cell else "" for cell in raw_row]
           if debug:
             print(f"    Row {row_idx}: raw = {raw_row}")
             print(f"    Row {row_idx}: clean = {clean_row}")

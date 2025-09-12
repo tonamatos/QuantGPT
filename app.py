@@ -66,7 +66,7 @@ if uploaded_pdf:
         report_text = f.read()
 
     st.download_button(
-        label="📥 Download Risk Report",
+        label="Download Risk Report",
         data=report_text,
         file_name="risk_report.md",
         mime="text/markdown"
