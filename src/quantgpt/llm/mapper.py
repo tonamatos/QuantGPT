@@ -93,6 +93,7 @@ def create_risk_report(mapping: dict, G: KnowledgeGraph, output_path: str):
 
         #Obtaining LIR scores
         risk_lines = []
+        likelihood = impact = overall = "N/A"
 
         for r in risks:
             # --- LIR ---
@@ -100,8 +101,6 @@ def create_risk_report(mapping: dict, G: KnowledgeGraph, output_path: str):
             lir_scores = get_lir_scores(assessment_id, 'src/databases/pq_risk.db')
             if isinstance(lir_scores, tuple):
                 likelihood, impact, overall = lir_scores
-            else:
-                likelihood = impact = overall = "N/A"
 
             # --- STRIDE text formatting ---
             stride_json = r.get("quant_stride")
